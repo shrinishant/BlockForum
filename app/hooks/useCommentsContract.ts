@@ -1,5 +1,5 @@
 const Web3 = require('web3')
-const ABI = require("../../../artifacts/contracts/Comments.sol/Comments.json")
+const ABI = require("../../utils/Comments.json")
 const address = "0x87baF730110fdc308aDc5bC73453927b33ca1e73"
 const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
 import type { BigNumber } from "ethers";

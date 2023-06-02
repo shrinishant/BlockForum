@@ -21,6 +21,7 @@ export default function CommentEditor ({topic} : CommentEditorProps) {
     // console.log(await web3.eth.getAccounts())
 
     const handleSubmit = () => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const contract = useCommentsContract()
 
         contract.addComment(topic, message, account)

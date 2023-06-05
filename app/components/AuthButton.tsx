@@ -24,7 +24,7 @@ export default function AuthButton(props : ButtonProps) {
         console.log("no extension")
         toast.error("MetaMask extension required to sign in")
       }
-    }, [web3])
+    }, [])
 
     // console.log(accounts)
 
@@ -39,7 +39,7 @@ export default function AuthButton(props : ButtonProps) {
     
     useEffect(() => {
         accountFun()
-    }, [accountFun])
+    }, [])
 
     const handleSignIn = async () => {
       const ethereum = window.ethereum as any

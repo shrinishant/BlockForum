@@ -48,10 +48,14 @@ export default function CommentEditor ({topic} : CommentEditorProps) {
         <>
             <Stack spacing={3}>
                 <HStack spacing={3} alignItems="start">
-                    {/* <Avatar
-                    size={48}
-                    address={account}
-                    /> */}
+                    {
+                        account?.length && (
+                            <Avatar
+                                size={48}
+                                address={account}
+                                />
+                        )
+                    }
                     <Textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}

@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-export default function AuthButton(props : ButtonProps) {
+export default function AuthButton(props : ButtonProps, text: string) {
     
     const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
     const [account, setAccount] = useState("")

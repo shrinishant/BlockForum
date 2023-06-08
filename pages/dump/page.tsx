@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar"
 import { ChakraProvider } from "@chakra-ui/react"
 import { Toaster, toast } from "react-hot-toast"
 import App from "./pages";
+import Question from "./components/Question"
 
 
 function MyApp({Component, pageProps}: AppProps){
@@ -15,6 +16,7 @@ function MyApp({Component, pageProps}: AppProps){
             <Navbar />
             {/* <Component {...pageProps} /> */}
             <Toaster position="bottom-right" />
+            {/* <Question /> */}
             <App />
         </ChakraProvider>
     )

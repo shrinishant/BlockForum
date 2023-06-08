@@ -1,14 +1,14 @@
+"use client";
 import * as React from "react"
 import NextLink from "next/link"
 import { Icon } from "@chakra-ui/react"
 import { Tabs, TabList, Tab } from "@chakra-ui/react"
 import {FaBalanceScale, FaCommentAlt} from "react-icons/fa"
-import { useRouter } from "next/router"
+import { usePathname} from "next/navigation"
 
 const Navbar : React.FunctionComponent = () => {
 
-    const route = useRouter()
-    const currentRoute = route.pathname
+    const currentRoute = usePathname()
 
     return(
         <nav>

@@ -4,6 +4,7 @@ import Question from "./Question"
 import useForumContract from "../hooks/useFormContract"
 import {useState, useEffect} from "react"
 import { BigNumber } from "ethers"
+import QuestionEditor from "./QuestionEditor"
 
 export interface QuestionProps {
     questionId: BigNumber;
@@ -40,9 +41,10 @@ const Questions: React.FunctionComponent = () => {
                 ques.length > 0 && <Stack spacing={4}>
                     {
                         ques?.map((q : QuestionProps) => (
-                            <Question {...q} key={q?.questionId.toNumber()} />
+                            <Question {...q} key={q?.questionId.toString()} />
                         ))
                     }
+                    {<QuestionEditor />}
                 </Stack>
             }
         </Box>

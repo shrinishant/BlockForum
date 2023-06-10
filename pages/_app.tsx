@@ -11,8 +11,8 @@ function MyApp({Component, pageProps}: AppProps){
         <ChakraProvider theme={theme}>
             <Navbar />
             <Component {...pageProps} />
+            {/* <App /> */}
             <Toaster position="bottom-right" />
-            <App />
         </ChakraProvider>
     )
 }

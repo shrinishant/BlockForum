@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { Box, Center, Spinner, Stack } from '@chakra-ui/react';
+import * as React from 'react'
+import { Box, Center, Spinner, Stack } from '@chakra-ui/react'
 import Answer from './Answer'
-import type { BigNumber } from 'ethers';
+import type { BigNumber } from 'ethers'
 import useForumContract, { Answer as AnswerStruct } from "../hooks/useFormContract"
+import AnswerEditor from './AnswereEditor'
 
 interface AnswersProps {
-  questionId: BigNumber;
+  questionId: BigNumber
 }
 
 const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
-  const [sortedAnswers, setSortedAnswers] = React.useState<AnswerStruct[]>([]);
+  const [sortedAnswers, setSortedAnswers] = React.useState<AnswerStruct[]>([])
 
   const query = useForumContract()
 
@@ -27,9 +28,10 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
         {sortedAnswers?.map((answer, i) => (
           <Answer  answer={answer}  />
         ))}
+        <AnswerEditor questionid={questionId} />
       </Stack>
     </Box>
-  );
-};
+  )
+}
 
-export default Answers;
+export default Answers

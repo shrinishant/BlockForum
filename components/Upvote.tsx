@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Icon } from '@chakra-ui/react';
 import { FaArrowUp } from 'react-icons/fa';
 import { Button, ButtonProps, Text } from '@chakra-ui/react';
-import type { BigNumber } from 'ethers';
+import { BigNumber } from 'ethers';
 import useForumContract from '../hooks/useFormContract';
 
 interface UpvoteButtonProps extends ButtonProps {
@@ -11,7 +11,7 @@ interface UpvoteButtonProps extends ButtonProps {
 }
 
 const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props }) => {
-  const [upvoteCount, setUpvoteCount] = React.useState(0);
+  const [upvoteCount, setUpvoteCount] = React.useState<Number>(0);
 
   const upvoteCountText = upvoteCount === 1 ? '1 Upvote' : `${upvoteCount} Upvotes`;
 
@@ -19,7 +19,10 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
 
   useEffect(() => {
     const fetchUpvoteCount = async () => {
-        query.getUpVotes(answerId).then((r) => setUpvoteCount(r.toNumber()))
+        query.getUpVotes(answerId).then((r) => {
+          console.log(r)
+          setUpvoteCount(r)
+        })
         .catch((e) => console.log(e))
     };
     fetchUpvoteCount();

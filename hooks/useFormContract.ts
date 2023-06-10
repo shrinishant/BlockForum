@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers"
 import ABI from "../../artifacts/contracts/Forum.sol/Forum.json"
-const address = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853"
-const address_we3 = "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+const address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+const address_we3 = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 // owner address:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 // user1 address:  0x70997970C51812dc3A010C7d01b50e0d17dc79C8
 const Web3 = require('web3')
@@ -94,7 +94,7 @@ const useForumContract = () => {
     }
 
     const upVoteAnswer =async (answerId:BigNumber, account: string) : Promise<void> => {
-        const tx = await contract.methods.upVoteAnswer(answerId).send({
+        const tx = await contract.methods.upvoteAnswer(answerId).send({
             from: account
         })
     }

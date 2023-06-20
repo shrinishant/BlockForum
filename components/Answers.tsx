@@ -4,6 +4,7 @@ import Answer from './Answer'
 import type { BigNumber } from 'ethers'
 import useForumContract, { Answer as AnswerStruct } from "../hooks/useFormContract"
 import AnswerEditor from './AnswereEditor'
+import useEvents from '@/hooks/useEvents'
 
 interface AnswersProps {
   questionId: BigNumber
@@ -13,6 +14,7 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
   const [sortedAnswers, setSortedAnswers] = React.useState<AnswerStruct[]>([])
 
   const query = useForumContract()
+  useEvents({questionId})
 
   React.useEffect(() => {
     query.getAnswers(questionId).then((r) => {

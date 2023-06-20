@@ -5,6 +5,7 @@ import useForumContract from "../hooks/useFormContract"
 import {useState, useEffect} from "react"
 import { BigNumber } from "ethers"
 import QuestionEditor from "./QuestionEditor"
+import useEvents from "@/hooks/useEvents"
 
 export interface QuestionProps {
     questionId: BigNumber;
@@ -15,8 +16,8 @@ export interface QuestionProps {
 
 const Questions: React.FunctionComponent = () => {
     const [ques, setQues] = useState<QuestionProps[]>([])
-    
-    useEffect(() => {
+
+    const updateQuestions = () => {
         useForumContract().getAllQuestions()
         .then((results) => {
             console.log(results)
@@ -33,7 +34,13 @@ const Questions: React.FunctionComponent = () => {
             setQues(ques)
         })
         .catch((e) => console.log(e))
-    }, [])
+    }
+
+    const updated = useEvents({}, updateQuestions)
+    
+    useEffect(() => {
+        updateQuestions()
+    }, [updated])
 
     return (
         <Box>

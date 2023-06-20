@@ -19,6 +19,34 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
             updateFun()
         }
 
+        const answerHandler = (answer: any) => {
+            console.log(answer.returnValues.answer['questionId'])
+            if(questionId){
+                const answerQIdNumber = answer.returnValues.answer['questionId']
+                const questionIdNumber = questionId.toString()
+                const answerIdNumber = answer.returnValues.answer['answerId']
+
+                console.log(answerQIdNumber, questionIdNumber)
+                if(answerQIdNumber !== questionIdNumber){
+                    return
+                }
+
+                // this function should be called from correct components for answered and upvoted
+                updateFun()
+            }
+        }
+
+        const transferHandler =async (from:string, to: string, amount: BigNumber, emittedEvent: Event) => {
+            console.log("transferred")
+            if(to === forumContract.contract.address){
+                console.log(`Transferred ${makeNum(amount)} Token to Forum Contract`)
+            }else if(from === constants.AddressZero){
+                console.log(`Minted ${makeNum(amount)} Token to : ${truncateMiddle(to, 6, 5, '...')}`)
+            }else{
+                console.log(`Transferred ${makeNum(amount)} Token to : ${truncateMiddle(to, 6, 5, '...')}`)
+            }
+        }
+
         const QuestionListener = forumContract.contract.events.QuestionAdded({}, (err: any, event: any) => {
             if(err) {
                 console.log(err)
@@ -29,8 +57,41 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
         })
         .on("data", questionHandler)
 
+        const AnswerListener = forumContract.contract.events.AnswerAdded({}, (err: any, event: any) => {
+            if(err) {
+                console.log(err)
+            }
+        })
+        .on("connected", function(subscriptionId: any) {
+            console.log(subscriptionId)
+        })
+        .on("data", answerHandler)
+
+        const upVotedListener = forumContract.contract.events.AnswerUpvoted({}, (err: any, event: any) => {
+            if(err) {
+                console.log(err)
+            }
+        })
+        .on("connected", function(subscriptionId: any) {
+            console.log(subscriptionId)
+        })
+        .on("data", answerHandler)
+
+        const transferListener = tokenContract.contract.events.Transfer({}, (err: any, event: any) => {
+            if(err) {
+                console.log(err)
+            }
+        })
+        .on("connected", function(subscriptionId: any) {
+            console.log(subscriptionId)
+        })
+        .on("data", transferHandler)
+
         return () => {
             QuestionListener.unsubscribe()
+            AnswerListener.unsubscribe()
+            upVotedListener.unsubscribe()
+            transferListener.unsubscribe()
         }
     }, [])
 }

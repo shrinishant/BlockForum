@@ -14,14 +14,19 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
   const [sortedAnswers, setSortedAnswers] = React.useState<AnswerStruct[]>([])
 
   const query = useForumContract()
-  useEvents({questionId})
 
-  React.useEffect(() => {
+  const updateAnswers = () => {
     query.getAnswers(questionId).then((r) => {
         const sortAnswers = r.sort((a, b) => (a.upVotes > b.upVotes ? -1 : 1))
         setSortedAnswers(sortAnswers)
     }).catch((e) => console.log(e))
     console.log(sortedAnswers, "sorted")
+  }
+
+  useEvents({questionId}, updateAnswers)
+
+  React.useEffect(() => {
+    updateAnswers()
   }, [])
 
   return (

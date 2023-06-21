@@ -16,9 +16,10 @@ export interface QuestionProps {
 
 const Questions: React.FunctionComponent = () => {
     const [ques, setQues] = useState<QuestionProps[]>([])
+    const forumContract = useForumContract()
 
     const updateQuestions = () => {
-        useForumContract().getAllQuestions()
+        forumContract.getAllQuestions()
         .then((results) => {
             console.log(results)
             const ques = results.map((r: QuestionProps) => {

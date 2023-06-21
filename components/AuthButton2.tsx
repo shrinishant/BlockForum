@@ -38,6 +38,23 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
           setBtnText('Sign In')
           showToast()
         }
+
+        if(typeof web3 !== 'undefined'){
+          web3.eth.net.isListening().then(() => {
+            console.log("Metamask is connected")
+          })
+          .catch((error: any) => {
+            console.error('Error: ', error)
+            console.log("Metamask is not connected")
+            
+            console.log(web3.eth.getChainId())
+            if(web3.eth.getChainId() !== '0x89'){
+              toast.error('Please Connect to the Polygon Mumbai test Network', {
+                id: 'network-error'
+              })
+            }
+          })
+        }
       }, [])
 
       const showToast = () => {

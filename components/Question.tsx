@@ -23,9 +23,10 @@ const Question: React.FunctionComponent<QuestionProps> = ({
 }) => {
 
     const [answers, setAnswers] = useState<Answer[]>([])
+    const forumContract = useForumContract()
 
     useEffect(() => {
-        const query = useForumContract().getAnswers(questionId)
+        const query = forumContract.getAnswers(questionId)
         .then((r) => {
             console.log(r)
             setAnswers(r)

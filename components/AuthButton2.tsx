@@ -24,7 +24,7 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
       
       useEffect(() => {
           accountFun()
-      }, [])
+      }, [accountFun])
   
       useEffect(() => {
         // console.log(web3.currentProvider)
@@ -46,7 +46,7 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
           .catch((error: any) => {
             console.error('Error: ', error)
             console.log("Metamask is not connected")
-            
+
             console.log(web3.eth.getChainId())
             if(web3.eth.getChainId() !== '0x89'){
               toast.error('Please Connect to the Polygon Mumbai test Network', {
@@ -55,7 +55,7 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
             }
           })
         }
-      }, [])
+      }, [text, web3])
 
       const showToast = () => {
         setTimeout(() => {

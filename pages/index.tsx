@@ -33,7 +33,7 @@ const App : NextPage = () => {
             // )
         }
         fetchQuestion()
-    }, [])
+    }, [contract])
 
     const accountFun = () => {
         web3.eth.getAccounts()

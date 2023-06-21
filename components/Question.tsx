@@ -32,7 +32,7 @@ const Question: React.FunctionComponent<QuestionProps> = ({
             setAnswers(r)
         })
         .catch((e) => console.log(e))
-    }, [])
+    }, [forumContract, questionId])
 
     return(
         <>

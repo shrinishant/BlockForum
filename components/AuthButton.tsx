@@ -30,7 +30,7 @@ export default function AuthButton(props : ButtonProps, text: string) {
     
     useEffect(() => {
         accountFun()
-    }, [])
+    }, [accountFun])
 
     useEffect(() => {
       // console.log(web3.currentProvider)
@@ -42,7 +42,7 @@ export default function AuthButton(props : ButtonProps, text: string) {
         console.log("no extension")
         showToast()
       }
-    }, [])
+    }, [web3])
 
     const showToast = () => {
       setTimeout(() => {

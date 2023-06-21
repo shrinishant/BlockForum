@@ -27,13 +27,13 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
 
   React.useEffect(() => {
     updateAnswers()
-  }, [])
+  }, [updateAnswers])
 
   return (
     <Box>
       <Stack spacing={2}>
         {sortedAnswers?.map((answer, i) => (
-          <Answer  answer={answer}  />
+          <Answer key={i}  answer={answer}  />
         ))}
         <AnswerEditor questionid={questionId} />
       </Stack>

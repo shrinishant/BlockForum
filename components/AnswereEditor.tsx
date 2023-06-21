@@ -37,7 +37,7 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
   
   useEffect(() => {
       accountFun()
-  }, [])
+  }, [accountFun])
 
   const isUserTippable = async () => {
     const data = await web3.eth.getBalance(account)
@@ -102,7 +102,7 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
 
   useEffect(() => {
     updateBalance()
-  }, [account])
+  }, [account, updateBalance])
 
   return (
     <Stack spacing={3}>

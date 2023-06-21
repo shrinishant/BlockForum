@@ -41,7 +41,7 @@ const Questions: React.FunctionComponent = () => {
     
     useEffect(() => {
         updateQuestions()
-    }, [updated])
+    }, [updateQuestions])
 
     return (
         <Box>

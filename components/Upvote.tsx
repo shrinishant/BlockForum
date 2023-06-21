@@ -36,7 +36,7 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
   
   useEffect(() => {
       accountFun()
-  }, [])
+  }, [accountFun])
 
   useEffect(() => {
     const fetchUpvoteCount = async () => {
@@ -47,7 +47,7 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
         .catch((e) => console.log(e))
     }
     fetchUpvoteCount()
-  }, [answerId])
+  }, [answerId, query])
 
   const handleClick = async () => {
     try {

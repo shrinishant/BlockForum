@@ -14,6 +14,9 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
     const tokenContract = useTokenContract()
 
     useEffect(() => {
+
+        console.log(tokenContract.contract.events.Transfer)
+
         const questionHandler = (question: any) => {
             console.log("What's the question?", question)
             updateFun()
@@ -36,8 +39,15 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
             }
         }
 
-        const transferHandler =async (from:string, to: string, amount: BigNumber, emittedEvent: Event) => {
-            console.log("transferred")
+        const transferHandler = (emittedEvent: any) => {
+            // console.log("transfer handler called")  ---- Dunno why but these funcitons are getting called 36 time when emitted
+            console.log(emittedEvent)
+            const from = emittedEvent.returnValues['from']
+            const to = emittedEvent.returnValues['to']
+            const amount = emittedEvent.returnValues['value']
+
+            console.log(from, to, amount)
+
             if(to === forumContract.contract.address){
                 console.log(`Transferred ${makeNum(amount)} Token to Forum Contract`)
             }else if(from === constants.AddressZero){
@@ -93,7 +103,7 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
             upVotedListener.unsubscribe()
             transferListener.unsubscribe()
         }
-    }, [])
+    }, [questionId])
 }
 
 export default useEvents

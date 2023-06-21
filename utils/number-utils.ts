@@ -10,7 +10,7 @@ const makeBig = (value: string | number) => {
 
 const makeNum = (value: BigNumber) => {
     const numStr = ethers.utils.formatUnits(value, 18)
-    return numStr.substring(0, numStr.indexOf('.') + 3)
+    return numStr.substring(0, numStr.indexOf('.') + 5)
 }
 
 export {makeBig, makeNum}

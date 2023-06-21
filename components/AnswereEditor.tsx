@@ -8,6 +8,7 @@ import useTokenContract from '@/hooks/useTokenContract'
 import useForumContract from '@/hooks/useFormContract'
 import { useEffect, useState } from 'react'
 import { makeBig, makeNum } from '@/utils/number-utils'
+import useEvents from '@/hooks/useEvents'
 
 const Web3 = require('web3')
 
@@ -78,18 +79,29 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
     }
   }
 
-  useEffect(() => {
+  const updateBalance = () => {
     web3.eth.getBalance(contractAddress).then((data: any) => {
         console.log(data)
         setContractBalance(data)
     }).catch((e: any) => console.log(e))
 
+    //need to use accountfun() again only while working on emitted funciton
+    accountFun()
+    console.log(account)
     if(account){
         web3.eth.getBalance(account).then((data: any) => {
             console.log(data, makeNum(data))
             setAccountBalance(makeNum(data))
         }).catch((e: any) => console.log(e))
     }
+  }
+
+  const questionId = questionid
+
+  useEvents({questionId}, updateBalance)
+
+  useEffect(() => {
+    updateBalance()
   }, [account])
 
   return (

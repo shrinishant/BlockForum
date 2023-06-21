@@ -1,7 +1,7 @@
 import {makeNum} from "../utils/number-utils"
 import type { BigNumber } from "ethers"
 import ABI from "../../artifacts/contracts/Token.sol/Token.json"
-const address = "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 const Web3 = require('web3')
 const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
 

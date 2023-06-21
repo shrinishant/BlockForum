@@ -28,12 +28,12 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
   const [contractBalance, setContractBalance] = useState('0')
   const [accountBalance, setAccountBalance] = useState('0')
 
-  const accountFun = () => {
+  const accountFun = React.useCallback(() => {
     web3.eth.getAccounts()
       .then((accounts: any) => setAccount(accounts[0]))
       .catch((e: any) => console.log(e))
       console.log(account?.length, "length")
-  }
+  }, [account?.length, web3.eth])
   
   useEffect(() => {
       accountFun()
@@ -79,7 +79,7 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
     }
   }
 
-  const updateBalance = () => {
+  const updateBalance = React.useCallback(() => {
     web3.eth.getBalance(contractAddress).then((data: any) => {
         console.log(data)
         setContractBalance(data)
@@ -94,7 +94,7 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
             setAccountBalance(makeNum(data))
         }).catch((e: any) => console.log(e))
     }
-  }
+  }, [account, accountFun, web3.eth])
 
   const questionId = questionid
 

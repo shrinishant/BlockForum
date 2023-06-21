@@ -15,13 +15,13 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
 
   const query = useForumContract()
 
-  const updateAnswers = () => {
+  const updateAnswers = React.useCallback(() => {
     query.getAnswers(questionId).then((r) => {
         const sortAnswers = r.sort((a, b) => (a.upVotes > b.upVotes ? -1 : 1))
         setSortedAnswers(sortAnswers)
     }).catch((e) => console.log(e))
     console.log(sortedAnswers, "sorted")
-  }
+  }, [query, questionId, sortedAnswers])
 
   useEvents({questionId}, updateAnswers)
 

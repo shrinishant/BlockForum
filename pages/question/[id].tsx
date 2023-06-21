@@ -9,7 +9,7 @@ import Answers from '../../components/Answers'
 import useForumContract, {Question as QuestionStruct} from '@/hooks/useFormContract'
 
 const QuestionPage: NextPage = () => {
-  const [questionId, setQuestionId] = React.useState<BigNumber>()
+  const [questionId, setQuestionId] = React.useState<BigNumber>(BigNumber.from(0))
   const router = useRouter()
 
   const query = useForumContract()

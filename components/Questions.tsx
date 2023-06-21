@@ -18,7 +18,7 @@ const Questions: React.FunctionComponent = () => {
     const [ques, setQues] = useState<QuestionProps[]>([])
     const forumContract = useForumContract()
 
-    const updateQuestions = () => {
+    const updateQuestions = React.useCallback(() => {
         forumContract.getAllQuestions()
         .then((results) => {
             console.log(results)
@@ -35,7 +35,7 @@ const Questions: React.FunctionComponent = () => {
             setQues(ques)
         })
         .catch((e) => console.log(e))
-    }
+    }, [forumContract])
 
     const updated = useEvents({}, updateQuestions)
     

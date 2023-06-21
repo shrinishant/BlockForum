@@ -27,12 +27,12 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
   const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
   const [account, setAccount] = useState("")
 
-  const accountFun = () => {
+  const accountFun = React.useCallback(() => {
     web3.eth.getAccounts()
       .then((accounts: any) => setAccount(accounts[0]))
       .catch((e: any) => console.log(e))
       console.log(account?.length, "length")
-  }
+  }, [account?.length, web3.eth])
   
   useEffect(() => {
       accountFun()

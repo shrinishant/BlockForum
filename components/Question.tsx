@@ -47,7 +47,7 @@ const Question: React.FunctionComponent<QuestionProps> = ({
                         </Box>
                         <Heading size="md" my="2">
                             <NextLink href="/question/[id]" as={`/question/${questionId}`} passHref>
-                                <p>{message} Nishant</p>
+                                <p>{message}</p>
                             </NextLink>
                         </Heading>
                         <Flex alignItems="center" w="100%">

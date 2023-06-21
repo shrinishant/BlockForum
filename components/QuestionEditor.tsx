@@ -16,7 +16,7 @@ const QuestionEditor: React.FunctionComponent = () => {
   return (
     <Stack spacing={3}>
       <HStack spacing={3} alignItems='start'>
-        <Image borderRadius='full' boxSize='50px' fit='contain' src='polygon-logo.png' alt='Polygon Logo' />
+        <Image borderRadius='full' boxSize='50px' fit='contain' src='matic-logo.png' alt='Polygon Logo' />
         <Textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}

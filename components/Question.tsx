@@ -37,7 +37,9 @@ const Question: React.FunctionComponent<QuestionProps> = ({
         <>
             { !answerPage ? (
                 <HStack spacing={3} alignItems="center">
-                    {/* <Avatar size={48} address={creatorAddress} /> */}
+                    {
+                        creatorAddress ? <Avatar size={48} address={creatorAddress} /> : null
+                    }
                     <LinkBox as="article" flex={1} borderWidth="1px" rounded="md" p={3}>
                         <Box>
                             <TimeAgo date={Number(timeStamp) * 1000} />
@@ -53,7 +55,7 @@ const Question: React.FunctionComponent<QuestionProps> = ({
                             </Badge>
                             <Spacer />
                             {
-                                answers.length > 0 && (
+                                answers.length >= 0 && (
                                     <Badge px="5" borderRadius="full" colorScheme="gray">
                                         <Text color="gray.500">{answers.length} answers</Text>
                                     </Badge>
@@ -66,7 +68,7 @@ const Question: React.FunctionComponent<QuestionProps> = ({
             :
             (
                 <HStack spacing={3} alignItems='center'>
-                    {/* <Avatar size={48} address={creatorAddress} /> */}
+                    {creatorAddress ? <Avatar size={48} address={creatorAddress} /> : null}
                     <LinkBox as='article' flex={1} borderWidth='1px' rounded='md' p={3}>
                         <NextLink href='/' as="/" passHref>
                             <LinkOverlay>

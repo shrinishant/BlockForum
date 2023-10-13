@@ -12,25 +12,28 @@ declare global {
   }
 }
 
-export default function AuthButton(props : ButtonProps) {
+export default function AuthButton(props : ButtonProps, text: string) {
     
-    const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
+    const web3 = React.useMemo(() => {
+      return new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
+    }, [])
+
     const [account, setAccount] = useState("")
     const [isMetaMask, setIsMetaMask] = useState(false)
 
     // console.log(accounts)
 
 
-    const accountFun = () => {
+    const accountFun = React.useCallback(() => {
       web3.eth.getAccounts()
         .then((accounts: any) => setAccount(accounts[0]))
         .catch((e: any) => console.log(e))
         console.log(account?.length, "length")
-    }
+    }, [account?.length, web3.eth])
     
     useEffect(() => {
         accountFun()
-    }, [])
+    }, [accountFun])
 
     useEffect(() => {
       // console.log(web3.currentProvider)
@@ -42,7 +45,7 @@ export default function AuthButton(props : ButtonProps) {
         console.log("no extension")
         showToast()
       }
-    }, [])
+    }, [web3])
 
     const showToast = () => {
       setTimeout(() => {

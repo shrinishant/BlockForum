@@ -23,21 +23,24 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
   const queryForum = useForumContract()
   const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
   const [account, setAccount] = useState("")
-  const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
   
   const [contractBalance, setContractBalance] = useState('0')
   const [accountBalance, setAccountBalance] = useState('0')
 
-  const accountFun = React.useCallback(() => {
-    web3.eth.getAccounts()
-      .then((accounts: any) => setAccount(accounts[0]))
-      .catch((e: any) => console.log(e))
-      console.log(account?.length, "length")
-  }, [account?.length, web3.eth])
+  const accountFun = React.useCallback(async () => {
+    const accounts = await web3.eth.getAccounts()
+    console.log(accounts)
+    setAccount(accounts[0])
+    if(accounts[0]){
+      updateBalance(accounts[0])
+    }
+      console.log(accounts?.length, "length")
+  }, [])
   
   useEffect(() => {
       accountFun()
-  }, [accountFun])
+  }, [])
 
   const isUserTippable = async () => {
     const data = await web3.eth.getBalance(account)
@@ -79,30 +82,31 @@ const AnswerEditor: React.FunctionComponent<AnswerEditorProps> = ({ questionid }
     }
   }
 
-  const updateBalance = React.useCallback(() => {
-    web3.eth.getBalance(contractAddress).then((data: any) => {
-        console.log(data)
-        setContractBalance(data)
-    }).catch((e: any) => console.log(e))
+  const updateBalance = React.useCallback(async (account: string) => {
+    const contractBalance = await web3.eth.getBalance(contractAddress)
+    console.log(contractBalance)
+    if(contractBalance){
+        setContractBalance(contractBalance)
+    }
+    
 
     //need to use accountfun() again only while working on emitted funciton
-    accountFun()
+    // accountFun()
     console.log(account)
     if(account){
-        web3.eth.getBalance(account).then((data: any) => {
-            console.log(data, makeNum(data))
-            setAccountBalance(makeNum(data))
-        }).catch((e: any) => console.log(e))
+        const accBalance = await web3.eth.getBalance(account)
+        console.log(accBalance)
+        if(accountBalance){
+          console.log(accBalance, makeNum(accBalance))
+            setAccountBalance(makeNum(accBalance))
+        }
     }
-  }, [account, accountFun, web3.eth])
+  }, [])
 
   const questionId = questionid
 
   useEvents({questionId}, updateBalance)
 
-  useEffect(() => {
-    updateBalance()
-  }, [account, updateBalance])
 
   return (
     <Stack spacing={3}>

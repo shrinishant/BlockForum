@@ -1,13 +1,13 @@
 import * as React from "react"
 import { Box, Center, Spinner, Stack, Heading, Button } from "@chakra-ui/react"
-import Question from "./Question"
-import useForumContract from "../hooks/useFormContract"
+import Question from "@/components/Question"
+import useForumContract from "@/hooks/useFormContract"
 import {useState, useEffect} from "react"
 import { BigNumber } from "ethers"
-import QuestionEditor from "./QuestionEditor"
+import QuestionEditor from "@/components/QuestionEditor"
 import useEvents from "@/hooks/useEvents"
 import useAccount from "@/hooks/useAccount"
-import AuthButton2 from "./AuthButton2"
+import AuthButton from "@/components/AuthButton2"
 const Web3 = require('web3')
 import { useRouter } from "next/router"
 
@@ -18,7 +18,7 @@ export interface QuestionProps {
     timeStamp: BigNumber;
 }
 
-const Questions: React.FunctionComponent = () => {
+const DifferentNetwork: React.FunctionComponent = () => {
     const [ques, setQues] = useState<QuestionProps[]>([])
     const forumContract = useForumContract()
     const account = useAccount()
@@ -28,7 +28,7 @@ const Questions: React.FunctionComponent = () => {
     const updateQuestions = React.useCallback(async () => {
         if((await account.callCheckWallet()).status){
             forumContract.getAllQuestions()
-                .then((results) => {
+                .then((results: any) => {
                     console.log(results)
                     const ques = results.map((r: QuestionProps) => {
                         const q : QuestionProps = {
@@ -42,11 +42,10 @@ const Questions: React.FunctionComponent = () => {
                     console.log(ques)
                     setQues(ques)
                 })
-                .catch((e) => console.log(e))
+                .catch((e: any) => console.log(e))
             setIsUserReady(true)
         }else{
             setIsUserReady(false)
-            router.push("/different-network")
         }
     }, [])
 
@@ -56,20 +55,39 @@ const Questions: React.FunctionComponent = () => {
         updateQuestions()
     }, [isUserReady])
 
+    const handleNetworkChange = async () => {
+        try {
+            const networkId = 31337
+            const hexNetworkId = '0x' + networkId.toString(16);
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: hexNetworkId }]
+            });
+            console.log('Network changed successfully');
+            router.push("/")
+        } catch (error) {
+            console.error('Failed to change network:', error);
+        }
+    }
+
     return (
         <Box>
             {
-                isUserReady && ques.length > 0 && <Stack spacing={4}>
-                    {
-                        ques?.map((q : QuestionProps) => (
-                            <Question {...q} key={q?.questionId.toString()} />
-                        ))
-                    }
-                    {<QuestionEditor />}
-                </Stack>
+                <Box p={8} maxW="600px" minW="320px" m="0 auto" textAlign="center">
+                    <Box position='relative' pt='5' mb='5'>
+                        <Heading lineHeight='tall' mb='2'>
+                            You're not connected to the Polygon Network. Please click below to connect to Required Network
+                        </Heading>
+                    </Box>
+                    <AuthButton
+                        text='Change Network'
+                        
+                        onClick={handleNetworkChange}
+                        />
+                </Box>
             }
         </Box>
     )
 }
 
-export default Questions
+export default DifferentNetwork

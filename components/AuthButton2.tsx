@@ -22,11 +22,11 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
           .then((accounts: any) => setAccount(accounts[0]))
           .catch((e: any) => console.log(e))
           console.log(account?.length, "length")
-      }, [account?.length, web3.eth])
+      }, [])
       
       useEffect(() => {
           accountFun()
-      }, [accountFun])
+      }, [])
   
       useEffect(() => {
         // console.log(web3.currentProvider)
@@ -37,7 +37,7 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
         }else{
           setIsMetaMask(false)
           console.log("no extension")
-          setBtnText('Sign In')
+          setBtnText('Install MetaMask')
           showToast()
         }
 
@@ -57,7 +57,7 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
             }
           })
         }
-      }, [text, web3])
+      }, [])
 
       const showToast = () => {
         setTimeout(() => {
@@ -72,7 +72,8 @@ const AuthButton: React.FunctionComponent<AuthButtonProps> = ({ text, ...props }
       <Button
         {...props}
         onClick={async () => {
-          !isMetaMask && await window.ethereum.request({ method: 'eth_requestAccounts' })
+          const installLink = 'https://metamask.io/download.html'
+          window.location.href = installLink
         }}
       >
         {btnText}

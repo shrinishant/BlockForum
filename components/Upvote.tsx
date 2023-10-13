@@ -11,6 +11,7 @@ import { makeBig } from '@/utils/number-utils'
 import Web3 from 'web3'
 import { useState } from "react"
 const address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+import useEvents from '@/hooks/useEvents'
 
 interface UpvoteButtonProps extends ButtonProps {
   answerId: BigNumber
@@ -32,25 +33,27 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
       .then((accounts: any) => setAccount(accounts[0]))
       .catch((e: any) => console.log(e))
       console.log(account?.length, "length")
-  }, [account?.length, web3.eth])
+  }, [])
   
   useEffect(() => {
       accountFun()
-  }, [accountFun])
+  }, [])
+
+  const fetchUpvoteCount = async () => {
+    query.getUpVotes(answerId).then((r) => {
+      console.log(r)
+      setUpvoteCount(r)
+    })
+    .catch((e) => console.log(e))
+}
 
   useEffect(() => {
-    const fetchUpvoteCount = async () => {
-        query.getUpVotes(answerId).then((r) => {
-          console.log(r)
-          setUpvoteCount(r)
-        })
-        .catch((e) => console.log(e))
-    }
     fetchUpvoteCount()
-  }, [answerId, query])
+  }, [])
 
   const handleClick = async () => {
     try {
+      console.log(account)
       await queryToken.approve(address, makeBig(1000))
       await query.upVoteAnswer(answerId, account)
       toast.success('UpVoted')
@@ -58,6 +61,8 @@ const Upvote: React.FunctionComponent<UpvoteButtonProps> = ({ answerId, ...props
       toast.error(e.data?.message || e.message)
     }
   }
+
+  useEvents({}, setUpvoteCount)
 
   return (
     <>

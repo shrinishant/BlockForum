@@ -15,24 +15,39 @@ const App : NextPage = () => {
     const [account, setAccount] = useState("")
     const contract = useForumContract()
 
-    useEffect(() => {
-        const fetchQuestion =async () => {
-            console.log(
-                "are we connecting to the contract!? ",
-                await contract.getAllQuestions()
-            )
-
-            console.log(
-                "answers",
-                await contract.getAnswers(BigNumber.from(0))
-            )
-
-            // console.log(
-            //     "post question",
-            //     await contract.postQuestion("Is this sexy?", account)
-            // )
+    const checkWallet = async () => {
+        if(typeof web3 !== 'undefined' && web3.currentProvider.isMetaMask){
+            const netId = await web3.eth.net.getId()
+            if(String(netId) !== '31337'){
+                console.log("Not Connected to Required Network")
+            }else{
+                const fetchQuestion =async () => {
+                    console.log(
+                        "are we connecting to the contract!? ",
+                        await contract.getAllQuestions()
+                    )
+        
+                    console.log(
+                        "answers",
+                        await contract.getAnswers(BigNumber.from(0))
+                    )
+        
+                    // console.log(
+                    //     "post question",
+                    //     await contract.postQuestion("Is this sexy?", account)
+                    // )
+                }
+                fetchQuestion()
+            }
+            console.log("metamask installed")
+        }else{
+          
+          console.log("no extension")
         }
-        fetchQuestion()
+    }
+
+    useEffect(() => {
+        checkWallet()
     }, [contract])
 
     const accountFun = () => {

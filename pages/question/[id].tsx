@@ -29,7 +29,7 @@ const QuestionPage: NextPage = () => {
         setQuestions(r)
     })
     .catch((e) => console.log(e))
-  }, [query])
+  }, [])
 
   return (
     <Box p={3} pt={8} maxW='600px' minW='320px' m='0 auto'>

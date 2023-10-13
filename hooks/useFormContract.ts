@@ -1,10 +1,13 @@
 import { BigNumber } from "ethers"
 import ABI from "../ABI/Forum.json"
 
-const address = "0x23206B5d3967dA1eCAe53cbA3f728deB1d246FEc"
+// const address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+const address = "0x2629aC3aacc25E1B2E97520285012164D63FCeC2"
 
 const Web3 = require('web3')
-const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
+
+import useAccount from "./useAccount"
 
 export enum ForumEvent {
     QuestionAdded = 'QuestionAdded',
@@ -28,22 +31,22 @@ export interface Answer {
     upVotes: BigNumber;
 }
 
-let account: String = ""
+const account = useAccount()
 
-const accountFun = () => {
-    web3.eth.getAccounts()
-    .then((accounts: any) => {
-        account = accounts[0]
-    })
-    .catch((e: any) => console.log(e))
+account.callCheckWallet()
+
+const beforeMethodCall = async() => {
+    const walletStatus = await account.callCheckWallet()
+    if(!walletStatus.status){
+        return false
+    }
 }
-
-accountFun()
 
 const useForumContract = () => {
     const contract = new web3.eth.Contract(ABI.abi, address)
 
     const getAllQuestions = async (): Promise<Question[]> => {
+        beforeMethodCall()
         const query = await contract.methods.getQuestions().call()
         console.log(query, "questions")
         const questions : Question [] = query.map((q : Question) => {

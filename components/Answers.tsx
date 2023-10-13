@@ -21,13 +21,13 @@ const Answers: React.FunctionComponent<AnswersProps> = ({ questionId }) => {
         setSortedAnswers(sortAnswers)
     }).catch((e) => console.log(e))
     console.log(sortedAnswers, "sorted")
-  }, [query, questionId, sortedAnswers])
+  }, [])
 
   useEvents({questionId}, updateAnswers)
 
   React.useEffect(() => {
     updateAnswers()
-  }, [updateAnswers])
+  }, [])
 
   return (
     <Box>

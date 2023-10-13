@@ -103,7 +103,7 @@ const useEvents = ({questionId}: useEventsQuery, updateFun: any) => {
             upVotedListener.unsubscribe()
             transferListener.unsubscribe()
         }
-    }, [questionId])
+    }, [])
 }
 
 export default useEvents

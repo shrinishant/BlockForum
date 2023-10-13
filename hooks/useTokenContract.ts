@@ -2,9 +2,10 @@ import {makeNum} from "../utils/number-utils"
 import type { BigNumber } from "ethers"
 import ABI from "../ABI/Token.json"
 
-const address = "0x321aC693099C9FEc5E27e3E245D8A85B793abC6b"
+// const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+const address = "0x52BADBd6EACB4d8a326CB6FFB7a1c4e9bC525213"
 const Web3 = require('web3')
-const web3 = new Web3(Web3.givenProvider || "https://rpc-mumbai.maticvigil.com")
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
 
 export enum TokenEvent {
     Transfer = 'Transfer',
